@@ -1,28 +1,52 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <Header/>
+        <b-container>
+          <Input :addListItem="addListItem"/>
+          <List :todolist="list" :markAsComplete="markAsComplete"/>
+        </b-container>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header';
+import Input from './components/Input';
+import List from './components/List';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+   Header, 
+   Input, 
+   List
+  }, 
+  data(){
+    return {
+      list : []
+    }
+  }, 
+  methods : {
+    addListItem(input){
+      this.list.push({key : this.list.length + 1, details : input, completed : false});
+    }, 
+    markAsComplete(val){
+
+      this.list = this.list.map(item => {
+
+        if(item.key == val){
+            item.completed = true
+        }
+
+        return item;
+      });
+
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    h1{
+      color:yellowgreen;
+    }
 </style>
